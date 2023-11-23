@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Healthcare Website</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        header {
+            background-color: #4cb3aa;
+            padding: 10px;
+            text-align: left;
+        }
+
+        #logo {
+            max-width: 100px;
+            max-height: 100px;
+        }
+
+        #container {
+            position: relative;
+            margin: 50px auto;
+            width: 200px;
+            height: 200px;
+        }
+
+        #circle-button {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background-color: #db3434;
+            cursor: pointer;
+            transition: transform 0.3s ease-in-out;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #circle-button:hover {
+            transform: translateY(10px);
+        }
+
+        #ambulance_vid {
+            max-width: 80%;
+            max-height: 80%;
+            border-radius: 50%;
+        }
+        #button{
+            position: relative;
+            left:300px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <img id="logo" src="C:\Users\Prachi\.vscode\.vscode\Minor 2\img\ai_logo.jpg" alt="Healthcare Logo">
+    </header>
+<h1 id="button">Click the below button to contact hospitals near you</h1>
+    <div id="container">
+        <div id="circle-button" onclick="openNewPage()">
+            <video id="ambulance_vid" autoplay muted loop>
+                <source src="ambulance1.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        </div>
+    </div>
+
+    <script>
+        function openNewPage() {
+            window.location.href = "location2.html";
+        }
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Healthcare Contact Us</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+    $(document).ready(function() {
+      $("#submit").click(function(event) {
+        if (!$("#terms").prop("checked")) {
+          event.preventDefault();
+          alert("Please agree to the terms and conditions before submitting.");
+        }
+      });
+    });
+  </script>
+<style>
+    
+body {
+      font-family: 'Arial', sans-serif;
+    }
+    header {
+      background-color: rgb(57, 197, 120);
+      padding: 10px;
+      text-align: center;
+    }
+    .frame {
+      align-items: center;
+      gap: 4px;
+      top: 26px;
+      left: 100px;
+      display: inline-flex;
+      position: absolute;
+}
+
+    .image-2 {
+      padding-left: -20px;
+      position: relative;
+      width: 55px;
+      height: 50px;
+}
+
+    .healthcare {
+      position: relative;
+      width: fit-content;
+      font-family: "Lexend Tera", Helvetica;
+      font-weight: 600;
+      color: transparent;
+      font-size: 26px;
+      text-align: center;
+      letter-spacing: -2.34px;
+      line-height: normal;
+}
+    .container {
+      position: relative;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+      box-sizing: border-box;
+    }
+    .image-container {
+        width: 2000px;
+        height:1000px;
+        overflow: hidden;
+    }
+    h1 {
+      color: white;
+    }
+    nav {
+      text-align: right;
+      padding: 10px;
+      background-color: #f4f4f4;
+    }
+    nav a {
+      margin: 0 10px;
+      text-decoration: none;
+      color: #333;
+    }
+    main {
+      padding: 20px;
+    }
+    h2 {
+      font-size: 22px;
+      font-weight: 600;
+      margin-top: -360px;
+      Margin-bottom: -3px;
+      Color: #222;
+      text-align: center;
+    }
+    h3{
+      font-size: 50px;
+      font-weight: 400;
+      margin-top: 3px;
+      margin-bottom: 20px;
+      color: #000000;
+      font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+      text-align: center;
+    }
+    form {
+      margin: 0 auto;
+      width: 60%;
+    }
+    input {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+      font-family: 'Arial', sans-serif;
+    }
+    select{
+        width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+      font-family: 'Arial', sans-serif;
+    }
+    textarea{
+        width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+      font-family: 'Arial', sans-serif;
+    }
+    button {
+      background-color: rgb(57, 197, 120);
+      color: white;
+      padding: 8px;
+      margin-top: 10px;
+      cursor: pointer;
+    }
+    footer {
+      background-color: rgb(57, 197, 120);
+      padding: 20px;
+      text-align: center;
+      color: white;
+    }
+    .logo {
+      width: 100px;
+      height: 100px;
+    }
+    input[type="submit"] {
+      width: 100px;
+      height: 30px;
+      text-align: center;
+}
+.submit-container {
+      display: flex;
+      justify-content: center;
+    }
+  </style>
+</head>
+<body>
+  <header>
+      <div class="frame">
+        <img class="image-2" src="C:\Users\Prachi\.vscode\.vscode\Minor 2\img\ONE CLICK.jpg"/>
+        <p class="healthcare"><span class="span">ONE</span> <span class="text-wrapper-3">CLICK</span></p>
+      </div>
+    </div>
+  </header>
+  <nav>
+    <ul>
+    <a href="index.html">Home</a>
+    <a href="ai_contact.html">Contact</a>
+    <a href="aboutus.html">About Us</a>
+    <a href="login.html">Log In</a>
+    </ul>
+  </nav>
+  <div class="image-container">
+    <img src="contact us.jpg">
+  </div>
+  <main>
+    <h2>Get in Touch</h2>
+    <h3>Contact Us</h3>
+    <form action="/contact" method="post">
+            <div style="display: flex; margin-bottom: 10px;">
+              <label for="firstName">First Name:</label>
+              <input type="text" id="firstName" name="firstName" placeholder="Enter your first name" style="margin-left: 10px;">
+              <label for="lastName" style="margin-left: 20px;">Last Name:</label>
+              <input type="text" id="lastName" name="lastName" placeholder="Enter your last name" style="margin-left: 10px;">
+            </div>
+          
+            <div style="display: flex; margin-bottom: 10px;">
+              <label for="email">Email:</label>
+              <input type="email" id="email" name="email" placeholder="Enter your email" style="margin-left: 10px;">
+              <label for="phone" style="margin-left: 20px;">Phone Number:</label>
+              <input type="tel" id="phone" name="phone" placeholder="Enter your phone number" style="margin-left: 10px;">
+            </div>
+  <label for="topic">Choose a Topic:</label>
+  <select name="topic">
+    <option value="">Select one</option>
+    <option value="topic1">Topic 1</option>
+    <option value="topic2">Topic 2</option>
+    <option value="topic3">Topic 3</option>
+  </select>
+  <br>
+  <br><label for="message">Message:</label>
+  <textarea name="message" placeholder="Type your message..."></textarea>
+
+  <div style="margin-left: -130px; margin-bottom: 10px;">
+    <input type="checkbox" id="terms" name="terms" required style="margin-right: -420px;">
+    <label for="terms">I accept the terms</label>
+  </div>
+  <div class="submit-container">
+    <input type="submit" value="Submit">
+  </div> 
+</form>
+  </main>
+  <footer>
+    <p>Copyright &copy; 2023 Healthcare</p>
+  </footer>
+</body>
+</html>

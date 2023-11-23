@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nearby Hospitals Finder</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <style>
+        #map-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        #map {
+            height: 400px;
+            width: 100%;
+            border-radius: 20px;
+            box-sizing: border-box;
+            border: 5px solid #8B4513; /* Brown color, adjust as needed */
+        }
+
+        #find {
+            font-family: cursive;
+            position: relative;
+            left: 500px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1 id="find">Finding hospitals near you</h1>
+    <div id="map-container">
+        <div id="map"></div>
+    </div>
+    <div class="group-3">
+        <div class="appointments-wrapper">
+          <a href="booking.html" class="appointments" style="color: rgb(15, 14, 14); font-family: Verdana, Geneva, Tahoma, sans-serif; text-decoration: none; letter-spacing: 1px; position: relative; left:500px; top:50px;     display: block;
+          background-color: rgb(0, 128, 98);
+          width:200px;
+          border: 1px solid rgb(82, 141, 101);
+          padding: 10px;
+          margin: 10px;
+          color: #f9f6f6;
+          box-shadow: 0 0 2px rgba(0, 0, 0, 0.1);
+          position: relative;">BOOK APPOINTMENT</a>
+    </div>
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script>
+        function getLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(showPosition, showError);
+            } else {
+                alert("Geolocation is not supported by this browser.");
+            }
+        }
+
+        function showPosition(position) {
+            const latitude = position.coords.latitude;
+            const longitude = position.coords.longitude;
+
+            const map = L.map('map').setView([latitude, longitude], 15);
+
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            }).addTo(map);
+
+            const myLocationMarker = L.marker([latitude, longitude], { icon: redIcon }).addTo(map);
+
+            // Find nearby hospitals using Overpass API
+            fetch(`https://overpass-api.de/api/interpreter?data=[out:json];(node[amenity=hospital](around:10000,${latitude},${longitude}););out;`)
+                .then(response => response.json())
+                .then(data => {
+                    // Sort hospitals by distance
+                    data.elements.sort((a, b) => {
+                        const aDistance = L.latLng(latitude, longitude).distanceTo(L.latLng(a.lat, a.lon));
+                        const bDistance = L.latLng(latitude, longitude).distanceTo(L.latLng(b.lat, b.lon));
+                        return aDistance - bDistance;
+                    });
+
+                    // Loop through each hospital and add a green marker with a red dotted line connecting to your location
+                    const maxHospitalsToShow = 10;
+                    for (let i = 0; i < Math.min(maxHospitalsToShow, data.elements.length); i++) {
+                        const hospital = data.elements[i];
+                        const hospitalLocation = L.latLng(hospital.lat, hospital.lon);
+                        const distance = L.latLng(latitude, longitude).distanceTo(hospitalLocation) / 1000; // Convert to kilometers
+
+                        const hospitalMarker = L.marker(hospitalLocation, { icon: greenIcon }).addTo(map);
+                        const contactDetails = getContactDetails(hospital.tags); // Function to extract contact details
+                        hospitalMarker.bindPopup(`${hospital.tags.name || 'Hospital'} (${distance.toFixed(2)} km away)${contactDetails}`).openPopup();
+
+                        // Draw a red dotted line connecting your location to the hospital
+                        const line = L.polyline([myLocationMarker.getLatLng(), hospitalMarker.getLatLng()], {
+                            color: 'red',
+                            dashArray: '5, 10', // Dotted line pattern
+                            weight: 2, // Line thickness
+                        }).addTo(map);
+                    }
+                })
+                .catch(error => console.error('Error fetching hospitals:', error));
+        }
+
+        function showError(error) {
+            switch (error.code) {
+                case error.PERMISSION_DENIED:
+                    alert("User denied the request for Geolocation.");
+                    break;
+                case error.POSITION_UNAVAILABLE:
+                    alert("Location information is unavailable.");
+                    break;
+                case error.TIMEOUT:
+                    alert("The request to get user location timed out.");
+                    break;
+                case error.UNKNOWN_ERROR:
+                    alert("An unknown error occurred.");
+                    break;
+            }
+        }
+
+        function getContactDetails(tags) {
+            let contactDetails = '';
+
+            if (tags.phone) {
+                contactDetails += `<br>Phone: ${tags.phone}`;
+            }
+
+            if (tags.email) {
+                contactDetails += `<br>Email: ${tags.email}`;
+            }
+
+            return contactDetails;
+        }
+
+        // Leaflet Icon for the red marker
+        var redIcon = new L.Icon({
+            iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
+            iconSize: [25, 41],
+            iconAnchor: [12, 41],
+            popupAnchor: [1, -34],
+            shadowSize: [41, 41]
+        });
+
+        // Leaflet Icon for the green marker
+        var greenIcon = new L.Icon({
+            iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png',
+            iconSize: [25, 41],
+            iconAnchor: [12, 41],
+            popupAnchor: [1, -34],
+            shadowSize: [41, 41]
+        });
+
+        // Call the getLocation function when the page loads
+        window.onload = getLocation;
+    </script>
+</body>
+
+</html>

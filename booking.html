@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            background-color: #f4f4f4;
+            padding: 10;
+            background-image: url('https://img.freepik.com/premium-photo/medical-background-stethoscope-clear-green-background-pharmacology-clinic-health-disease-treatment-concept_90380-976.jpg');
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+        .container {
+            width: 300px;
+            margin-top: 100px;
+            margin-left: 500px;
+            padding: 70px;
+            background-color: rgba(224, 131, 131, 0.466);
+            border-radius: 5px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+       }
+       .container h2 {
+            text-align: center;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            display: block;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+            <h2>BOOK NOW</h2>
+            <form action="#" id="booking" >
+                <div class="form-group">
+                    <label for="name">Name:</label>
+                    <input type="text" id="name" name="uname" placeholder="Enter your name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email ID:</label>
+                    <input type="email" id="email" name="uemail" placeholder="Enter your email id" required>
+                    <span class="message" id="email-message"></span>
+                </div>
+                <div class="form-group">
+                    <label for="appointment_time">Appointment Time:</label>
+                    <input type="datetime-local" id="appointment_time" name="appointment_time" required><br>
+                </div>
+                <div class="form-group">
+                    <a href="success.html"><button type="button">BOOK NOW</button></a>
+                </div>
+            </form>
+    </div>
+</body>
+</html>
